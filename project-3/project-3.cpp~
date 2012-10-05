@@ -1,0 +1,58 @@
+#include <dirent.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <stdio.h>
+
+using namespace std;
+
+#define success 0
+#define failure 1
+#define MSG_MAX 256
+
+int printDir(const char* target)
+int printDirStats(const char* target)
+void printDirError(const char* target)
+
+char* globalErrorMessage = NULL;
+
+void int main (int argc, char* argv[]) {
+	const char* target argc > 1 ? argv[1] : ".";
+
+	if (printDirectory(directory) != success) {
+    		printDirError(target);
+    		return failure;
+  	}
+  
+  	if (printDirStats(target) != success) {
+		printDirError(target);
+    		return failure;
+  	}
+  
+	return success;
+}
+
+int printDir(const char* target) {
+	DIR* current = opendir(target);
+
+  	if(target == NULL) {
+    		globalErrorMessage = "Unable to open the selected directory";
+    		return failure;
+  	}
+
+ 	struct dirent* directoryEntry;
+  	while ((directoryEntry = readdir(current)) != NULL) {
+    		printf("Directory: %s - Entry: %s\n", directory, directoryEntry->d_name);
+  	}	
+
+  	return success;
+}
+
+int printDirStats(const char* target) {
+
+}
+
+int printDirError(const char* target) {
+	char buffer[MSG_MAX];
+	snprintf(buffer, sizeof(buffer) - 1, "Target: '%s' has error %\n", target, 
+		globalErrorMessage);	
+}
